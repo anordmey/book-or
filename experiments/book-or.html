@@ -1,0 +1,122 @@
+<html>
+
+<head>
+  <title>Find my books!</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="initial-scale=1.0" />
+</head>
+
+<body>
+
+
+  <div class="slide" id="instructions">
+    <img src="images/stanford.png" alt="Stanford University">
+    <p id='logo-text'>Stanford Language and Cognition Lab</p> 
+
+    <p class="block-text"><center>
+      Subject ID (type "debug" for debug mode to see data): <br>
+      <input type="text" id="subjectID" name="subjectID" size="30"> 
+    </center></p>
+
+<!--     <p class="block-text"><center> 
+      List number (1 or 2): <br>
+      <input type="text" id="order" name="order" size="30"> 
+    </center></p> -->
+
+    <button type="button" onClick="this.blur(); experiment.check()"><font size="24">Start Game</button>
+    <p id="pleaseWait"></p>
+    <!--       <button type="button" id="startButton" onClick="this.blur(); $('#sound_player')[0].load(); $('#bloop_player')[0].load(); $('#wrong_player')[0].load(); $('#reward_player')[0].load(); $('#test_player')[0].load(); experiment.soundCheck()">Start Game Practice</button> -->
+  </div>
+
+  <div class="slide" id="startGame">
+    <br><br><br><br><br><br><br>
+    <center>
+      <button type="button" onClick="this.blur(); experiment.training()"><font size="24">Dot Game</font></button>
+    </center>
+    <center>
+      <button type="button" onClick="this.blur(); experiment.next()"><font size="24">Start Game</font></button>
+    </center>
+
+  </div>
+
+  <div class="slide" id="training"></div>
+
+  <div class="slide" id="blankSlide"> </div>
+
+  <div class="slide" id="stage">
+
+    <div id="objects"> 
+      <div class="cells">
+        <div class="cdiv" name="left">
+          <div class="row">
+            <div class="pic">
+              <img class='item' id = 'left1a'/>
+              <img class='item' id = 'left1b'/>
+            </div>
+            <div class="pic">
+              <img class='item' id = 'left2a'/>
+              <img class='item' id = 'left2b'/>
+            </div>
+          </div>
+          <div class="row">
+            <div class="pic">
+              <img class='item' id = 'left3a'/>
+              <img class='item' id = 'left3b'/>
+            </div>
+            <div class="pic">
+              <img class='item' id = 'left4a'/>
+              <img class='item' id = 'left4b'/>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cells">
+        <div class="filler">
+        </div>
+      </div>
+      <div class="cells">
+        <div class="cdiv" name="right">
+          <div class="row">
+            <div class="pic">
+              <img class='item' id= 'right1a'/>
+              <img class='item' id= 'right1b'/>
+            </div>
+            <div class="pic">
+              <img class='item' id= 'right2a'/>
+              <img class='item' id= 'right2b'/>
+            </div>
+          </div>
+          <div class="row">
+            <div class="pic">
+              <img class='item' id= 'right3a'/>
+              <img class='item' id= 'right3b'/>
+            </div>
+            <div class="pic">
+              <img class='item' id= 'right4a'/>
+              <img class='item' id= 'right4b'/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <p align="center" id="sentenceText"></p>
+  </div>
+
+  <div class="slide" id="finished">
+    <br>
+    <center>
+      Thank you!
+      <br>
+      <br>
+      <br>
+      <img src='images/verygoodface.png'/>
+    </center>
+  </div>
+  <script src="book-or.js"></script>
+
+
+</body>
+</html>
