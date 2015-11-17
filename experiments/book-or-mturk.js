@@ -453,7 +453,7 @@ var experiment = {
 			if (subjectID == "debug") {
 				alert(result_string); // debug mode 
 			} else {
-				$.post("http://langcog.stanford.edu/cgi-bin/AEN/book-or/book-or_process.php", {
+				$.post("https://langcog.stanford.edu/cgi-bin/AEN/book-or/book-or_process.php", {
 					postresult_string: result_string
 				})
 			}
