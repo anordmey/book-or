@@ -448,7 +448,7 @@ var experiment = {
 			var nowtime = getCurrentTime();
 
 			//data
-			var result_string = subjectID + "," + trialNum + "," + item1 + "," + item2 + "," + wordType + "," + imType + "," + side + "," + response + "," + rt + "," + nowdate + "," + nowtime + "\n";
+			var result_string = subjectID + "," + trialNum + "," + items[[counter]] + "," item1 + "," + item2 + "," + wordType + "," + imType + "," + side + "," + response + "," + rt + "," + nowdate + "," + nowtime + "\n";
 
 			if (subjectID == "debug") {
 				alert(result_string); // debug mode 
