@@ -290,6 +290,7 @@ var experiment = {
 		subid: turk.workerId,
 		gender: [],
 		age: "",
+		english: "",
 		nativeLanguage: "",
 		comments: ""
 	},
@@ -306,11 +307,12 @@ var experiment = {
 		$("#stage").css("background-color", "black");
 
 //get trial images and trial words
-		var trialItems = shuffle(items[[counter]]);
-		var item1 = trialItems[0][0];
-		var item2 = trialItems[1][0];
-		var label1 = trialItems[0][1];
-		var label2 = trialItems[1][1];
+		var trialItems = items[[counter]][0][0] + "." + items[[counter]][1][0]; 
+		var shuffleItems = shuffle(items[[counter]]);
+		var item1 = shuffleItems[0][0];
+		var item2 = shuffleItems[1][0];
+		var label1 = shuffleItems[0][1];
+		var label2 = shuffleItems[1][1];
 		var wordType = trialTypes[counter][0];
 		var imType = trialTypes[counter][1];
 		var imSides = imType.split("/");
@@ -395,9 +397,9 @@ var experiment = {
 
 		var sentence
 		if (wordType == "or") {
-			sentence = "I have books about " + label1 + " and " + label2 + "."
-		} else if (wordType == "and") {
 			sentence = "I have books about " + label1 + " or " + label2 + "."
+		} else if (wordType == "and") {
+			sentence = "I have books about " + label1 + " and " + label2 + "."
 		} else if (wordType == "noun") {
 			sentence = "I have books about " + label1 + "."
 		}
@@ -448,7 +450,7 @@ var experiment = {
 			var nowtime = getCurrentTime();
 
 			//data
-			var result_string = subjectID + "," + trialNum + "," + items[[counter]] + "," item1 + "," + item2 + "," + wordType + "," + imType + "," + side + "," + response + "," + rt + "," + nowdate + "," + nowtime + "\n";
+			var result_string = subjectID + "," + trialNum + "," + trialItems + "," + item1 + "," + item2 + "," +  wordType + "," + imType + "," + side + "," + response + "," + rt + "," + nowdate + "," + nowtime + "\n";
 
 			if (subjectID == "debug") {
 				alert(result_string); // debug mode 
@@ -489,24 +491,34 @@ var experiment = {
 
 		$("#gender").trigger("reset");
 		$("#age").trigger("reset");
+		$("#langCheck").trigger("reset");
 		$("#language").trigger("reset");
 		$("#comments").trigger("reset");
+
+		var gen = "";
+		var ag = "";
+		var eng = "";
+		var lan = "";
+		var comm = "";
+
 		showSlide("askInfo");
 
 		$("#endButton").click(function() {
 			var gen = $("input:radio[name=genderButton]:checked").val();
 			var ag = $("#ageRange").val();
-			var lan = $("#nativeLanguage").val();
+			var eng = $("input:radio[name=languageButton]:checked").val();
+			var lan = $("#primaryLanguage").val();
 			var comm = $("#commentQ").val();
 
-			if (gen == "" | ag == "" | lan == "") {
+			if (gen === undefined | ag === undefined | lan === undefined | eng === undefined) {
 				alert("Please answer all of the questions");
 			} else {
 
-				experiment.demo.gender = gen
-				experiment.demo.age = ag
-				experiment.demo.nativeLanguage = lan
-				experiment.demo.comments = comm
+				experiment.demo.gender = gen;
+				experiment.demo.age = ag;
+				experiment.demo.english = eng;
+				experiment.demo.nativeLanguage = lan;
+				experiment.demo.comments = comm;
 
 				experiment.end();
 			}

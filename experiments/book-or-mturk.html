@@ -138,6 +138,7 @@
       <form name="age" id="age">
         <b>Age range:</b> &nbsp;&nbsp;
         <select name="ageRange" id="ageRange">
+          <option value=NA>Decline to answer</options>
           <option value=17>Under 18</option>
           <option value=25>18-25</option>
           <option value=35>26-35</option>
@@ -145,15 +146,21 @@
           <option value=55>46-55</option>
           <option value=65>56-65</option>
           <option value=66>Above 66</option>
-          <option value=NA>Decline to answer</options>
           </select>
         </form>
 
         <br>
 
+      <form name="langCheck" id="langCheck">
+        <b>Is English your primary language (the language you feel most comfortable communicating in)?</b> &nbsp;&nbsp;
+        <input type="radio" name="languageButton" value="English" />Yes &nbsp;&nbsp;
+        <input type="radio" name="languageButton" value="Other" />No &nbsp;&nbsp;
+        <input type="radio" name="languageButton" value="Decline" />Decline to answer
+      </form>
+
         <form name="language" id="language">
-          <b>What is your native language? </b>&nbsp;&nbsp;
-          <input type="text" id="nativeLanguage"/>
+          <b>If no, what is your primary language? </b>&nbsp;&nbsp;
+          <textarea id="primaryLanguage" rows=1 cols=20></textarea>
         </form>
 
         <br>
