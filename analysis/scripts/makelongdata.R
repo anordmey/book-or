@@ -4,8 +4,8 @@ rm(list=ls())
 library(rjson)
 
 ##specify path to data you want to use:
-data.path <- "../raw_data/test/"
-demo.path <- "../demographics/test/"
+data.path <- "../raw_data/mturk/"
+demo.path <- "../demographics/mturk/"
 
 #Load in data
 files <- dir(data.path)
@@ -45,6 +45,6 @@ d <- merge(d, demo)
 
 d$subid <- as.factor(as.numeric(d$subid))
 
-write.csv(d,  "../long_data/book-or_long_test.csv")
+write.csv(d,  "../long_data/book-or_long_mturk.csv")
 
 

@@ -5,43 +5,58 @@ date: "November 17, 2015"
 output: html_document
 ---
 
-Analysis code for book-or study (Ann E. Nordmeyer & Michael C. Frank).  
+Analysis code for book-or study (Ann E. Nordmeyer & Michael C. Frank).  Study can be viewed at https://langcog.stanford.edu/expts/AEN/book-or/book-or-mturk.html.
 
 Participants saw two sets of books (each set contained 4 books with images on the covers) and read a sentence ("I have books about ...").  Participants were asked to figure out which set of books the sentence described.
 
 Three sentence types (word.type in data frame): 
-- and ("I have books about X and Y")
-- or ("I have books about X or Y")
-- noun ("I have books about X")
+
+* and ("I have books about X and Y")
+
+* or ("I have books about X or Y")
+
+* noun ("I have books about X")
+
 
 Three types of "book sets": 
-- and (all four books had both X and Y on the cover)
-- or (two books had just X on the cover, two books had just Y on the cover)
-- noun (all four books had just X on the cover)
+
+* and (all four books had both X and Y on the cover)
+
+* or (two books had just X on the cover, two books had just Y on the cover)
+
+* noun (all four books had just X on the cover)
+
 
 Combining these types of book sets gives us three possible combinations (image.type in data frame): 
-- and/or
-- and/noun
-- or/noun
+
+* and/or
+
+* and/noun
+
+* or/noun
+
 
 The experiment is fully crossed, leaving us with 9 trial types.  Participants saw four trials per trial type for a total of 36 trials.  
 
 Predicted selection (response in data frame): 
-1) "and", and/or: probably *and*, due to **semantics**, but this is a little weird and assumes you prefer a distributive reading (right?)
-2) "and", and/noun: *and* due to **semantics**
-3) "and", or/noun: *or* due to **semantics** (but this is a little weird because it is a collective reading?)
-4) "or", and/or: *or* due to **pragmatics** (scalar implicature)
-5) "or", and/noun: probably *noun*??, but **unclear**
-6) "or", or/noun: *or* due to **pragmatics** (scalar implicature (right? because it is more informative?  If I'd meant just X, I would have said so.), or conjunctive reading)
-7) "noun", and/or: probably *or* but **unclear** (a sort of ad-hoc implicature?)
-8) "noun", and/noun: *noun* due to **pragmatics** (ad-hoc implicature)
-9) "noun", or/noun: *noun* due to **pragmatics** (ad-hoc implicatures)
 
-This can help us tease a part a few different predictions about kids:
-(2) will help us understand whether children really understand "and"
-(1) and (3) might tell us something about collective vs. distributive readings (maybe?).  One potential problem that I forsee here is that the presence of (3) might lead to weird responses on (1)?
+1. "and", and/or: probably *and*, due to **semantics**, but it could be either depending on whether you read it as distributive or not?
 
-(4) vs. (6) and (8) vs. (9) are interesting because they pit some classic interpretations against each other.  In (6), you should choose the same response (or) if you compute the scalar implicature or if you interpret or as conjunction.  Comparing kids responses here to their responses in (4), which is a more classic test, might help tease apart their interpretations of "or".  Similarly, in (9), there are two reasons you might choose the correct response, either you understand the ad-hoc implicature, or you just want to select the image with more nouns.  Contrast performance on this with performance on (8), which is a more classic test and also much harder because the wrong answer is much more interesting (more objects).  Again, individual difference analyses here might give us more information about how different kids are responding to these sentences.    
+2. "and", and/noun: *and* due to **semantics**
+
+3. "and", or/noun: *or* due to **semantics**, but this is a little weird because it's the opposite reading as (1), something like "I have books about X and I have books about Y"
+
+4. "or", and/or: *or* due to **pragmatics** (scalar implicature)
+
+5. "or", and/noun: probably *noun*??, but **unclear**
+
+6. "or", or/noun: *or* due to **pragmatics** (scalar implicature (right? because it is more informative?  If I'd meant just X, I would have said so.), or conjunctive reading)
+
+7. "noun", and/or: probably *or* but **unclear** (a sort of ad-hoc implicature?)
+
+8. "noun", and/noun: *noun* due to **pragmatics** (ad-hoc implicature)
+
+9. "noun", or/noun: *noun* due to **pragmatics** (ad-hoc implicatures)
 
 # Setting up
 
@@ -78,12 +93,12 @@ Load in data, get demographic info, and clean up
 
 ```{r data}
 #Load in data
-d <- read.csv("../long_data/book-or_long_test.csv") 
+d <- read.csv("../long_data/book-or_long_mturk.csv") 
 
 n.original <- n.unique(d$subid)
 
 #Sometimes turkers say they are under 18, which they aren't supposed to be if they are on Turk, but I exclude them anyway
-d <- filter(d, age != "17")
+d <- filter(d, age != 17)
 n.age.exclusions <- n.original - n.unique(d$subid)
   
 #what languages?
@@ -93,9 +108,11 @@ n.lang.exclusions <- n.original - n.age.exclusions- n.unique(d$subid)
 n.final <- n.unique(d$subid)
 
 d <- select(d, subid, trial.num, item, word.type, image.type, response, rt)
+d$word.type <- factor(d$word.type, levels = c("and","or","noun"))
+d$image.type <- factor(d$image.type, levels = c("and/or", "and/noun", "or/noun"))
 ```
 
-We originally collected `r print(n.original)` participants.  `r print(n.age.exclusions)` were excluded for indicating that they are under 18 years of age (our introduction slide clarifies that people are not eligible to take the study if they are under 18, and you aren't supposed to have an MTurk account if you are under 18, but a few people still make this selection anyway).  `r print(n.lang.exclusions)` were excluded for indicating that English is not their primary language.  This left a total of `r print(n.final)` participants.  
+We originally collected `r n.original` participants.  `r n.age.exclusions` were excluded for indicating that they are under 18 years of age (our introduction slide clarifies that people are not eligible to take the study if they are under 18, and you aren't supposed to have an MTurk account if you are under 18, but a few people still make this selection anyway).  `r n.lang.exclusions` were excluded for indicating that English is not their primary language.  This left a total of `r n.final` participants.  
 
 
 # Response analysis
@@ -105,20 +122,26 @@ What do participants select for each trial type?
 ```{r choice}
 
 ms.response <- d %>%
-  group_by(subid, word.type, image.type) %>%
-  mutate(n = n()) %>%
   group_by(subid, word.type, image.type, response) %>%
-  mutate(prop = n()/n) %>%
-  group_by(subid, word.type, image.type, response) %>%
-  summarize(prop = mean(prop)) %>%
+  summarize(n = n()) %>%
+  spread(response, n) %>%
+  replace(is.na(.), 0) %>% 
+  mutate(total = and + noun + or) %>%
+  gather(response, n, and:or) %>%
+  mutate(prop = n / total) %>%
   group_by(word.type, image.type, response) %>%
   summarize(cih = ci.high(prop),
             cil = ci.low(prop),
-            prop = mean(prop))
-  
+            prop = mean(prop)) %>%
+  mutate(predictions = ifelse(word.type == "and", "semantics", "unclear"), 
+         predictions = ifelse((word.type == "or" & image.type == "and/or") | (word.type == "or" & image.type == "or/noun"), "scalar", predictions), 
+         predictions = ifelse((word.type == "noun" & image.type == "and/noun") | (word.type == "noun" & image.type == "or/noun"), "ad-hoc", predictions)) %>%
+  filter((image.type == "and/noun" & response != "or") |
+           (image.type == "and/or" & response != "noun") |
+           (image.type == "or/noun" & response != "and"))
 
 qplot(data = ms.response,
-      x = response, y = prop, 
+      x = response, y = prop, fill = predictions,
       geom = "bar", stat = "identity", position = "dodge") + 
       facet_grid(word.type ~ image.type, scales = "free") + 
   geom_errorbar(aes(ymin = cil, ymax = cih), 
@@ -130,8 +153,12 @@ qplot(data = ms.response,
 
 How long does it take participants on each trial type?
 
+I'm not sure this is actually an interesting analysis, but I had the RT data so here it is.  It's messy because participants read sentences, and presumably there's a lot of variability in reading time.
+
 ```{r rt}
 ms.rt <- d %>%
+  filter(log(rt) < mean(log(rt) + 3 * sd(log(rt))), 
+         log(rt) > mean(log(rt) - 3 * sd(log(rt)))) %>%
   group_by(subid, word.type, image.type) %>%
   summarize(rt = mean(rt)) %>%
   group_by(word.type, image.type) %>%
