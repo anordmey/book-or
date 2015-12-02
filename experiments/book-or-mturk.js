@@ -452,13 +452,14 @@ var experiment = {
 			//data
 			var result_string = subjectID + "," + trialNum + "," + trialItems + "," + item1 + "," + item2 + "," +  wordType + "," + imType + "," + side + "," + response + "," + rt + "," + nowdate + "," + nowtime + "\n";
 
-			if (subjectID == "debug") {
-				alert(result_string); // debug mode 
-			} else {
-				$.post("https://langcog.stanford.edu/cgi-bin/AEN/book-or/book-or_process.php", {
-					postresult_string: result_string
-				})
-			}
+			//no data collection in demo version
+			// if (subjectID == "debug") {
+			// 	alert(result_string); // debug mode 
+			// } else {
+			// 	$.post("https://langcog.stanford.edu/cgi-bin/AEN/book-or/book-or_process.php", {
+			// 		postresult_string: result_string
+			// 	})
+			// }
 
 			//update counter
 			counter++;
