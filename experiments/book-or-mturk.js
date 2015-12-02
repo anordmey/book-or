@@ -528,7 +528,7 @@ var experiment = {
 
 
 	end: function() {
-		turk.submit(experiment.demo, true);
-		showSlide("finish");
+		//turk.submit(experiment.demo, true);
+		showSlide("This is a demo version - no data was collected");
 	}
 }
