@@ -5,7 +5,7 @@ date: "November 17, 2015"
 output: html_document
 ---
 
-Analysis code for book-or study (Ann E. Nordmeyer & Michael C. Frank).  Study can be viewed at https://langcog.stanford.edu/expts/AEN/book-or/book-or-mturk.html.
+Analysis code for book-or study (Ann E. Nordmeyer & Michael C. Frank).  Study can be viewed at http://anordmey.github.io/book-or/experiments/book-or-mturk.html
 
 Participants saw two sets of books (each set contained 4 books with images on the covers) and read a sentence ("I have books about ...").  Participants were asked to figure out which set of books the sentence described.
 
